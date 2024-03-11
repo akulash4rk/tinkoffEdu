@@ -1,0 +1,56 @@
+var countOfCristals = 4
+var cost = 10
+var arrayOfBonus = [2, 2]
+var minDays = Int.max
+var localCost = cost
+
+    // MARK: начало костыля (добавляю в массив максимальное число которое может пригодиться)
+for int in 0..<arrayOfBonus.count {
+    localCost -= arrayOfBonus[int]
+}
+while localCost > 0 {
+    localCost = localCost - (arrayOfBonus.last!)
+    arrayOfBonus.append(arrayOfBonus.last!)
+    
+}
+//Конец костыля
+
+    //MARK: Функция
+func findMinDays(currentCost: Int, days: Int) -> Int {
+    var currentDays = days
+    var costInFunc = currentCost
+    
+    for i in 0..<arrayOfBonus.count {
+        
+        if i == 0 { // Если это первый элемент, значит надо подождать и предыдущий день
+            currentDays += 2
+        } else { //Если я уже получал бонусы в предыдущий, значит добавлю день
+            currentDays += 1
+        }
+        
+
+        
+        
+        costInFunc -= arrayOfBonus[i]
+        print(costInFunc, " = ", currentCost, " - ", arrayOfBonus[i], " d", currentDays)
+        if costInFunc > 0 {
+            findMinDays(currentCost: costInFunc, days: currentDays)
+        }
+        if costInFunc < 0 {
+            return 0
+        }
+        if costInFunc == 0 {
+            minDays = min(currentDays, minDays)
+            print("KAIF ", minDays)
+            return 0
+        }
+        
+    }
+    return 0
+}
+findMinDays(currentCost: cost, days: -1)
+if minDays == Int.max {
+    print(-1)
+} else {
+    print(minDays)
+}
