@@ -1,0 +1,40 @@
+var firstDoubles = [1, 0, 1, 1]
+var firstCountOfDoubles = [3, 2, 1, 3]
+var firstEnd : [Int] = []
+
+var counter = 0
+
+var secondDoubles = [0, 0, 1]
+var secondCountOfDoubles = [3, 2, 4]
+var secondEnd : [Int] = []
+
+
+for i in 0..<firstDoubles.count {
+    while counter < firstCountOfDoubles[i]{
+        firstEnd.append(firstDoubles[i])
+        counter += 1
+    }
+    counter = 0
+}
+
+
+for i in 0..<secondDoubles.count {
+    while counter < secondCountOfDoubles[i]{
+        secondEnd.append(secondDoubles[i])
+        counter += 1
+    }
+    counter = 0
+}
+
+print(firstEnd)
+print(secondEnd)
+
+
+for i in 0..<firstEnd.count{
+    if firstEnd[i] == secondEnd[i]{}
+    else {
+        counter += i+1
+    }
+}
+
+print(counter)
