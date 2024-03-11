@@ -1,0 +1,21 @@
+ar n = 9 // 4-ок загонов
+ var k = 3 // хочет построить
+ var maxIntForMin = n - k + 1
+ var min = k-1 + maxIntForMin * maxIntForMin
+ var averge = n/k
+  if (n%k != 0){
+       averge += 1
+     }
+ func findMin(n: Int, k: Int) -> Int {
+     if k == 0 {
+         return 0
+     }
+     var currentAverge = n / k
+     while currentAverge > n {
+         currentAverge -= 1
+     }
+     print(n, k, currentAverge)
+     return findMin(n: n - currentAverge, k: k - 1) + currentAverge * currentAverge
+ }
+ print(findMin(n : n, k : k))
+ print(min)
