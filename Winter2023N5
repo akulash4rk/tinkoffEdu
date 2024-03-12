@@ -1,0 +1,121 @@
+import Foundation
+
+//MARK: adding all cities as class CITY
+
+
+class City{
+    var myNumber : Int //собственный номер
+    var waysToCity : [Int]
+    var countOfBoxes : Int
+    init( myNumber : Int, waysToCity : [Int]){
+        self.waysToCity = waysToCity
+        self.countOfBoxes = 0
+        self.myNumber = myNumber
+    }
+}
+
+
+var arrayMain = [
+City(myNumber: 1, waysToCity: [2, 3]),
+City(myNumber: 2, waysToCity: [4, 5]),
+City(myNumber: 3, waysToCity: [6,7])
+]
+
+
+func checkForCity(numberOfCity: Int) -> Bool {
+    var currentBool = false
+    
+    for i in 0..<arrayMain.count {
+        if numberOfCity == arrayMain[i].myNumber {
+            currentBool = true
+        }
+    }
+    
+    return currentBool
+}
+
+for i in 0..<arrayMain.count {
+    for j in 0..<arrayMain[i].waysToCity.count {
+        if checkForCity(numberOfCity : arrayMain[i].waysToCity[j]) == true {
+            
+        }
+        
+        else{
+            arrayMain.append(City(myNumber: arrayMain[i].waysToCity[j], waysToCity: []))
+        }
+    }
+}
+
+
+for i in 0..<arrayMain.count {
+    print(arrayMain[i].myNumber)
+    print(arrayMain[i].waysToCity)
+}
+
+    
+var arrayOfInput : [[Int]] = [ //1-ый в какой город, 2-ой насколько падают вниз, 3 сколько коробок
+    [1, 2, 1],
+    [2, 2, 20],
+    [3, 0, 300],
+    [1, 1, 4000]
+    
+]
+
+
+
+//MARK: Main progress
+
+func result(arrayOfInput : [[Int]]) {
+    
+    var arrayToAddBoxes : [Int] = [] // 1
+    var counterOfDropToCityBoxes = 0
+    
+        
+        //adding all neiborhods to list arrayToAddBoxes
+    func addNeighborhoods(currentCountOfArray : Int) {
+        for i in 0..<currentCountOfArray{
+            for j in 0..<arrayMain.count{
+                if (arrayToAddBoxes[i] == arrayMain[j].myNumber) {
+                    arrayToAddBoxes.append(contentsOf: arrayMain[j].waysToCity)
+                }
+            }
+        }
+        //removing repiting
+        arrayToAddBoxes = Array(Set(arrayToAddBoxes))
+    }
+    
+    func addBoxes(currentAddBoxes : Int) {
+        for i in 0..<arrayToAddBoxes.count {
+            for j in 0..<arrayMain.count {
+                if arrayToAddBoxes[i] == arrayMain[j].myNumber {
+                    arrayMain[j].countOfBoxes += currentAddBoxes
+                }
+            }
+        }
+    }
+    
+    
+    for i in 0..<arrayOfInput.count {
+        arrayToAddBoxes.append(arrayOfInput[i][0])
+        counterOfDropToCityBoxes = arrayOfInput[i][1]
+        while counterOfDropToCityBoxes > 0 {
+            counterOfDropToCityBoxes -= 1
+            addNeighborhoods(currentCountOfArray : arrayToAddBoxes.count)
+        }
+        addBoxes(currentAddBoxes: arrayOfInput[i][2])
+        arrayToAddBoxes = []
+    }
+}
+
+    
+    
+
+
+result(arrayOfInput: arrayOfInput)
+
+
+for i in 0..<arrayMain.count{
+    print(arrayMain[i].countOfBoxes)
+}
+
+
