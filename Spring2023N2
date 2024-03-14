@@ -1,0 +1,29 @@
+
+//считываю исходные данные
+var arrayOfNames : [[String]] = []
+var countOfString = readLine()!.split(separator: " ").map{ Int($0)! }
+var counter = 0
+var maxCounter = 0
+for i in 0..<countOfString[0] {
+    var currentString = readLine()!.split(separator: " ").map{ String($0) }
+    arrayOfNames.append(currentString)
+}
+print(arrayOfNames)
+
+
+
+
+for i in 0..<arrayOfNames.count-1 {
+    var firstCheck  = Set<String>(arrayOfNames[i]) //беру каждый элемент массива
+    for j in 0..<arrayOfNames.count {
+        var secondCheck = Set<String>(arrayOfNames[j])
+        if secondCheck.isSubset(of: firstCheck) == true { //Сравниваю со всем массивом
+            counter += 1
+        }
+    }
+    maxCounter = max(counter, maxCounter) // беру максимальное количество из предыдущих и текущего сравнения
+    counter = 0
+}
+            
+    print(maxCounter)
+
