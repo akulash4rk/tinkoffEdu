@@ -1,0 +1,25 @@
+var countOfDays = readLine()!.split(separator: " ").map{ Int($0)! }
+var counter = 0
+var minSubs = Int.max
+var maxUnSubs = 0
+var arrayOfSubs = readLine()!.split(separator: " ").map{ Int($0)! }
+var currentSubs = 0
+
+for i in 0..<arrayOfSubs.count {
+    if i % 2 == 0 { //подключались
+        minSubs = min(minSubs, arrayOfSubs[i])
+        currentSubs += arrayOfSubs[i]
+    } else  { // отключались
+        maxUnSubs = max(maxUnSubs, arrayOfSubs[i])
+        currentSubs -= arrayOfSubs[i]
+    }
+}
+
+
+
+
+if maxUnSubs > minSubs { // если максимальных отписок больше, чем минимальных подписок
+    currentSubs =  currentSubs-2 * minSubs+2 * maxUnSubs // подписываем отписавшихся, отписываем тех минимально подписавшихся
+}
+
+print(currentSubs)
