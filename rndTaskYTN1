@@ -1,0 +1,13 @@
+var firstArray = readLine()!.split(separator: " ").map { Int($0)! }
+var secondArray = readLine()!.split(separator: " ").map { Int($0)! }
+var minQ = Int.max
+var maxQ = 0
+
+var minY = min(firstArray[1], firstArray[3], secondArray[1], secondArray[3])
+var minX = min(firstArray[0], firstArray[2], secondArray[0], secondArray[2])
+var maxY = max(firstArray[1], firstArray[3], secondArray[1], secondArray[3])
+var maxX = max(firstArray[0], firstArray[2], secondArray[0], secondArray[2])
+maxQ = max((maxY-minY), (maxX-minX))
+
+
+print(maxQ*maxQ)
