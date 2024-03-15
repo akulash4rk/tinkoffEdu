@@ -1,0 +1,59 @@
+
+import Foundation
+
+var mainArrayString : [String] = []
+var mainArrayHash : [[String : Int]] = [[:]]
+var newValue = 0 ?? nil
+var counterOfValue = 0
+var counterOfBlock = 0
+
+
+while true {
+    var firstArray = readLine()!.split(separator: "=").map { String($0)}
+    if firstArray == ["{"] {
+        counterOfBlock += 1 // переходим на уровень выше
+        if mainArrayHash.count <= counterOfBlock //если такой блок не создан
+        {
+            mainArrayHash.append([:])
+        }
+    }
+    
+    if firstArray == ["}"] { //перерход на уровень ниже
+        counterOfBlock -= 1
+    }
+    
+    
+    if firstArray.count == 2 {
+        newValue = Int(firstArray[1]) ?? nil
+        if newValue == nil { // мы приравниваем к букве??
+            for i in (0...counterOfBlock).reversed(){ //обход с текущего уровня до уровней ниже
+                for (key, value) in mainArrayHash[i] {
+                    if key == firstArray[1] { // есть ли эта буква в массиве
+                        counterOfValue += 1
+                        mainArrayHash[counterOfBlock].updateValue(value, forKey: firstArray[0])
+                        print(value)
+                        break// Мы нашли нужное значение, поэтому можем выйти из цикла
+                    }
+                }
+                if counterOfValue == 0 {
+                    mainArrayHash[counterOfBlock].updateValue(0, forKey: firstArray[0])
+                    print(0)
+                }
+                //если буквы такой нет на уровнях ниже, то присваиваю значение 0
+                if counterOfValue > 0 {
+                    counterOfValue = 0
+                    break // если буква нашлась, то выйти и не искать ее ниже
+                }
+                
+            }
+       
+        }
+        if newValue != nil // мы приравниваем к числу
+        {
+            mainArrayHash[counterOfBlock].updateValue(newValue!, forKey: firstArray[0])
+            
+        }
+        
+    }
+    print(mainArrayHash)
+}
