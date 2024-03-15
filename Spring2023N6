@@ -1,0 +1,42 @@
+var countOfElevators : Int
+var line : String
+var arrayOfElevators : [[Int]] = []
+var arrayOfBool : [Bool] = []
+var lineInt : [Int]
+var IOn = 0
+var maxLifts = 0
+
+//MARK: Read data
+line = readLine()!
+countOfElevators = Int(line)!
+
+
+while countOfElevators>0 {
+    countOfElevators -= 1
+    lineInt = readLine()!.split(separator: " ").map{Int($0)!}
+    arrayOfElevators.append(lineInt)
+    arrayOfBool.append(false) //data of checked elevators.
+}
+//можно было найти повторяющиеся элементы массива и по скольку раз. Проверять массив без них, если зашли на этаж, который повторяется, то добавлять количество этих повторов в следующую рекурсию
+
+
+
+
+    //MARK: Function of finding max ways from current floor
+func main(floor: Int, counter: Int, currentArrayOfBool: [Bool]){
+    var localArrayOfBool = currentArrayOfBool
+
+    
+    for i in 0..<arrayOfElevators.count {
+        if (arrayOfElevators[i][0] == floor && currentArrayOfBool[i] == false) {
+            localArrayOfBool[i] = true
+                main(floor: arrayOfElevators[i][1], counter: counter+1, currentArrayOfBool: localArrayOfBool)
+            maxLifts = max(maxLifts, counter+1)
+            localArrayOfBool[i] = false
+        }
+    }
+}
+
+main(floor: 0, counter: 0, currentArrayOfBool: arrayOfBool)
+
+print(maxLifts)
